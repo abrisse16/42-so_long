@@ -22,6 +22,13 @@ CFLAGS	= -Wall		\
 IFLAGS	= -I includes/ -I libft/includes/ -I mlx_linux/
 LDFLAGS = -L libft -lft -L mlx_linux -lmlx -lXext -lX11 -lm
 
+# macOS: X11 is provided by XQuartz (override with `make X11_PATH=...`)
+ifeq ($(shell uname -s), Darwin)
+X11_PATH?=	/opt/X11
+IFLAGS	+=	-I $(X11_PATH)/include
+LDFLAGS	:=	-L $(X11_PATH)/lib $(LDFLAGS)
+endif
+
 SRCS_PATH	= srcs/
 OBJS_PATH	= objs/
 DEP_PATH	= deps/

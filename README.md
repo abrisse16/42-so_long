@@ -48,6 +48,41 @@ The map must be rectangular, surrounded by walls and composed of only 5 possible
 
 The map must contain an valid path. In my implementation, a valid path is a path that allows the player to reach the exit after collecting every collectible.
 
+## Requirements
+
+The following dependencies are required to compile and run the project:
+
+- gcc
+- make
+- X11 include files (package xorg)
+- XShm extension (package libxext-dev)
+- BSD utility functions (package libbsd-dev)
+
+On Debian or Ubuntu:
+
+```sh
+sudo apt-get update && sudo apt-get install gcc make xorg libxext-dev libbsd-dev
+```
+
+### macOS
+
+This project uses the Linux (X11) version of MiniLibX, not the native macOS one, so X11 is provided by **XQuartz**:
+
+```sh
+xcode-select --install
+brew install --cask xquartz
+```
+
+Log out and back in after installing XQuartz so that the `DISPLAY` variable is set. The Makefile detects macOS and automatically adds XQuartz's headers and libraries (`/opt/X11`). If X11 is installed elsewhere, pass its prefix with `make X11_PATH=/path/to/x11`.
+
+Two errors point here: `'X11/Xlib.h' file not found` means the X11 headers were not found (check `X11_PATH`), and `Can't open display` means XQuartz is not running or `DISPLAY` is not set.
+
+### MiniLibX
+
+`mlx_linux/` is not part of this project. It is a vendored copy of [42paris/minilibx-linux](https://github.com/42paris/minilibx-linux), commit [`f07d00f`](https://github.com/42paris/minilibx-linux/commit/f07d00f07c5c652223f505b526f84dab73cf2598) (2 June 2026), used **unmodified**.
+
+It is vendored rather than pulled in as a submodule so that `git clone && make` works from a plain clone and from a downloaded archive, with no `--recursive` to remember. To update it, replace the directory with a fresh checkout of the upstream repository and change the commit referenced above.
+
 ## Usage
 
 Clone this repository :
