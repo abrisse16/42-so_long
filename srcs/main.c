@@ -15,11 +15,14 @@
 int	main(int ac, char **av)
 {
 	int		fd;
+	int		ret;
 	t_data	data;
 
 	data = init_data();
 	if (check_args(ac, av))
 		return (1);
+	if (ac == 3)
+		data.graphic.theme = av[2];
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (ft_perror("open"));
@@ -29,8 +32,8 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	close(fd);
-	display(&data);
+	ret = display(&data);
 	free_graphic(&data.graphic);
 	free_map(&data, (&data)->map.map);
-	return (0);
+	return (ret);
 }

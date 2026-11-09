@@ -22,6 +22,8 @@ void	free_graphic(t_graphic *g)
 		mlx_destroy_image(g->mlx, g->item.img);
 	if (g->player.img)
 		mlx_destroy_image(g->mlx, g->player.img);
+	if (g->exit_closed.img)
+		mlx_destroy_image(g->mlx, g->exit_closed.img);
 	if (g->exit.img)
 		mlx_destroy_image(g->mlx, g->exit.img);
 	if (g->win)

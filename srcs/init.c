@@ -49,10 +49,12 @@ static t_graphic	init_graphic(void)
 
 	ret.mlx = NULL;
 	ret.win = NULL;
+	ret.theme = DEFAULT_THEME;
 	ret.empty = init_img();
 	ret.wall = init_img();
 	ret.item = init_img();
 	ret.player = init_img();
+	ret.exit_closed = init_img();
 	ret.exit = init_img();
 	return (ret);
 }

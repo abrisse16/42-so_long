@@ -22,11 +22,15 @@
 # include "libft.h"
 # include "mlx.h"
 
-# define P_EMPTY "ressources/sand.xpm"
-# define P_WALL "ressources/cactus.xpm"
-# define P_ITEM "ressources/drop1.xpm"
-# define P_PLAYER "ressources/dino1.xpm"
-# define P_EXIT "ressources/puddle.xpm"
+# define ASSETS_DIR "assets/"
+# define DEFAULT_THEME "desert"
+
+# define T_EMPTY "/empty.xpm"
+# define T_WALL "/wall.xpm"
+# define T_ITEM "/collectible-1.xpm"
+# define T_PLAYER "/character-1.xpm"
+# define T_EXIT_CLOSED "/exit-closed.xpm"
+# define T_EXIT "/exit.xpm"
 
 # define ESCAPE 65307
 # define W 119
@@ -68,10 +72,12 @@ typedef struct s_graphic
 {
 	void	*mlx;
 	void	*win;
+	char	*theme;
 	t_img	empty;
 	t_img	wall;
 	t_img	item;
 	t_img	player;
+	t_img	exit_closed;
 	t_img	exit;
 }	t_graphic;	
 

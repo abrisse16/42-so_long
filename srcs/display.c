@@ -12,27 +12,48 @@
 
 #include "so_long.h"
 
-static int	get_texture(void *mlx, char *path, t_img *type)
+static int	get_texture(t_graphic *g, char *file, t_img *type)
 {
-	type->img = mlx_xpm_file_to_image(mlx, path, &type->height, &type->width);
+	char	*dir;
+	char	*path;
+
+	dir = ft_strjoin(ASSETS_DIR, g->theme);
+	path = ft_strjoin(dir, file);
+	free(dir);
+	if (!path)
+		return (ft_perror("malloc"));
+	type->img = mlx_xpm_file_to_image(g->mlx, path, &type->width,
+			&type->height);
 	if (!type->img)
-		return (ft_perror("mlx_xpm_file_to_image"));
-	return (0);
+	{
+		ft_putstr_fd("Error\nCannot load texture: ", 1);
+		ft_putendl_fd(path, 1);
+	}
+	free(path);
+	return (type->img == NULL);
 }
 
-static int	create_textures(t_graphic *graph)
+static int	create_textures(t_graphic *g)
 {
-	if (get_texture(graph->mlx, P_EMPTY, &graph->empty)
-		|| get_texture(graph->mlx, P_WALL, &graph->wall)
-		|| get_texture(graph->mlx, P_ITEM, &graph->item)
-		|| get_texture(graph->mlx, P_PLAYER, &graph->player)
-		|| get_texture(graph->mlx, P_EXIT, &graph->exit))
+	if (get_texture(g, T_EMPTY, &g->empty)
+		|| get_texture(g, T_WALL, &g->wall)
+		|| get_texture(g, T_ITEM, &g->item)
+		|| get_texture(g, T_PLAYER, &g->player)
+		|| get_texture(g, T_EXIT_CLOSED, &g->exit_closed)
+		|| get_texture(g, T_EXIT, &g->exit))
 		return (1);
 	return (0);
 }
 
-void	chose_texture(t_graphic *g, char c, int x, int y)
+void	chose_texture(t_data *data, char c, int x, int y)
 {
+	t_graphic	*g;
+	t_img		*door;
+
+	g = &data->graphic;
+	door = &g->exit;
+	if (data->game.item > 0)
+		door = &g->exit_closed;
 	if (c == '1')
 		mlx_put_image_to_window(g->mlx, g->win, g->wall.img,
 			g->wall.width * x, g->wall.height * y);
@@ -43,8 +64,8 @@ void	chose_texture(t_graphic *g, char c, int x, int y)
 		mlx_put_image_to_window(g->mlx, g->win, g->player.img,
 			g->player.width * x, g->player.height * y);
 	if (c == 'E')
-		mlx_put_image_to_window(g->mlx, g->win, g->exit.img,
-			g->exit.width * x, g->exit.height * y);
+		mlx_put_image_to_window(g->mlx, g->win, door->img,
+			door->width * x, door->height * y);
 	if (c == 'C')
 		mlx_put_image_to_window(g->mlx, g->win, g->item.img,
 			g->item.width * x, g->item.height * y);
@@ -60,7 +81,7 @@ void	push_textures(t_data *data)
 	{
 		j = -1;
 		while (++j < data->map.width)
-			chose_texture(&data->graphic, data->map.map[i][j], j, i);
+			chose_texture(data, data->map.map[i][j], j, i);
 	}
 }
 

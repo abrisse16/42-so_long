@@ -16,7 +16,7 @@ int	check_args(int ac, char **av)
 {
 	char	*str;
 
-	if (ac != 2)
+	if (ac != 2 && ac != 3)
 		return (ft_error("Incorrect number of arguments"));
 	str = ft_strrchr(av[1], '/');
 	if (str && ft_strlen(str) <= 5)

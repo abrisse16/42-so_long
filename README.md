@@ -19,6 +19,8 @@ French version [here](https://github.com/abrisse16/42-subjects/blob/7385a594afd1
 
 ---
 
+> **This is an improved version of the project.** The program as submitted to 42 and graded is available at the tag [`v1.0`](https://github.com/abrisse16/42-so_long/tree/v1.0). Since then, the game has gained selectable themes and an exit that shows whether it is unlocked.
+
 ## The project
 
 In this project, we have to create our own 2D game. Using the `MiniLibX` library, we will be able to create a window, display images inside it, and handle events from the keyboard to make a playable game.
@@ -96,8 +98,27 @@ In your local repository, run `make`
 To run `so_long`, use the following command :
 
 ```sh
-./so_long <map_file.ber>
+./so_long <map_file.ber> [theme]
 ```
+
+`theme` is the name of a directory in `assets/`, currently `desert` (the default) or `pac-man`.
+
+### Themes
+
+A theme is a directory in `assets/` containing six XPM files, all of the same size:
+
+| file | role |
+| --- | --- |
+| `empty.xpm` | floor |
+| `wall.xpm` | wall |
+| `character-1.xpm` | player |
+| `collectible-1.xpm` | collectible |
+| `exit-closed.xpm` | exit, until every collectible has been picked up |
+| `exit.xpm` | exit, once it is unlocked |
+
+Other files in a theme, such as animation frames, are not used by the game yet.
+
+This version of MiniLibX paints transparent XPM pixels in black, so each image has to include its own background.
 
 
 ---
